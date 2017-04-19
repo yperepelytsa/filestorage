@@ -1,0 +1,34 @@
+﻿@model List<string>
+    @{
+        ViewData["Title"] = "Home Page";
+    }
+    <div class="row">
+        <div class="col-md-9">
+            <h2>Only files in English are supported</h2>
+            <form action="/file-upload"
+                  class="dropzone"
+                  id="maindropzone" enctype="multipart/form-data">
+                <div class="fallback">
+                    <input name="files" type="file" multiple />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row" style="margin:20px 5px; ">
+        <div class="col-md-9">
+            <form id="searchform" asp-controller="Home" asp-action="Index">
+                <p>
+                    <input type="text" name="Search" placeholder="Search file content..." class="input-lg col-md-9" style="display:inline-block" />
+                    <input type="submit" value="Search" class="btn-default btn-lg col-md-2" style="margin-left:15px;display:inline-block; " />
+                </p>
+            </form>
+        </div>
+    </div>
+    <script>
+        
+    </script>
+    <div id="list">
+        @Html.Partial("FileTable", Model)
+    </div>
+
+

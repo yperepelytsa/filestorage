@@ -1,0 +1,49 @@
+﻿@model List<string>
+@{Layout = "";}
+@if (Model != null)
+    {
+    @foreach (var doc in Model)
+    {
+        <div class="row" style=" margin:10px; ">
+            <div class="col-md-9 col-sm-9 col-xs-9" style="background-color:lightgray;border-radius:4px;padding:10px;">
+                <p style="float:left;padding-top:10px;">@doc</p>
+                <form>
+                    <button type="button" id="@Html.Raw("d"+doc)" class="btn btn-default" aria-label="Left Align" style="float:right;" onclick="UploadFile(this.id)">
+                        <span class="glyphicon glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+                    </button>
+                </form>
+                <button type="button" id="@Html.Raw("u"+doc)" class="btn btn-default" aria-label="Left Align" style="float:right;" onclick="DeleteFile(this.id)">
+                    <span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+    }
+    if (Model.Count == 0)
+    {
+        <h3>No files uploaded yet.</h3>
+    }
+    <script>
+        function DeleteFile(clicked_id) {
+            $.ajax({
+            url: 'files/delete/' + clicked_id.substr(1),
+            contentType: 'application/json',
+            dataType: 'html',
+            type: 'POST',
+            cache: false,
+            success: function (data) {
+                 $("#list").load('@Url.Action("FileTable")');
+            },
+            error: function (data) {
+                alert('Error occurred');
+            }
+        });
+
+        }
+        function UploadFile(clicked_id) {
+            console.log(clicked_id);
+            window.location ='files/' + clicked_id.substr(1); 
+        }
+    </script>
+}
+
+
